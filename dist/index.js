@@ -55,6 +55,7 @@ function run() {
                 throw new Error('Input must be a valid number: app_id');
             const username = core.getInput('username', { required: true });
             const password = core.getInput('password', { required: true });
+            const otp = core.getInput('otp', { required: false });
             const modPath = path_1.resolve(core.getInput('path', { required: true }));
             if (!utils_1.isDirectory(modPath))
                 throw new Error(`Input path must be an existing directory: path (${modPath})`);
@@ -86,7 +87,7 @@ function run() {
                 core.info(changeNotes);
             }));
             yield core.group('Setting up SteamCMD', () => steamcmd_1.setupSteamCMD());
-            yield core.group('Publishing Mod', () => steamcmd_1.publishWorkshopItem(username, password, modPath, appId, fileId, changeNotes));
+            yield core.group('Publishing Mod', () => steamcmd_1.publishWorkshopItem(username, password, otp, modPath, appId, fileId, changeNotes));
         }
         catch (err) {
             core.setFailed(err.message);
@@ -431,7 +432,7 @@ exports.setupSteamCMD = setupSteamCMD;
  * @param fileId Steam WS Item ID
  * @param changeNotes Change notes to describe new version
  */
-function publishWorkshopItem(username, password, modPath, appId, fileId, changeNotes) {
+function publishWorkshopItem(username, password, otp, modPath, appId, fileId, changeNotes) {
     return __awaiter(this, void 0, void 0, function* () {
         const tmpPath = yield utils_1.createTempDirectory();
         const vdfPath = path_1.join(tmpPath, 'workshop.vdf');
@@ -440,8 +441,12 @@ function publishWorkshopItem(username, password, modPath, appId, fileId, changeN
         core.debug('workshop.vdf');
         core.debug(vdf);
         const args = [
-            '+login', username, password,
-            '+workshop_build_item', vdfPath,
+            '+login',
+            username,
+            password,
+            otp,
+            '+workshop_build_item',
+            vdfPath,
             '+quit'
         ];
         yield execSteamCMD(args);

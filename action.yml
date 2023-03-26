@@ -18,6 +18,9 @@ inputs:
   password:
     description: 'Steam password'
     required: true
+  otp:
+    description: 'Steam OTP (if 2FA is enabled)'
+    required: false
   path:
     description: 'Path to mod folder'
     required: true

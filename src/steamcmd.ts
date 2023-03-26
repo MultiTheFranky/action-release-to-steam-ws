@@ -66,7 +66,15 @@ export async function setupSteamCMD(): Promise<void> {
  * @param fileId Steam WS Item ID
  * @param changeNotes Change notes to describe new version
  */
-export async function publishWorkshopItem(username: string, password: string, modPath: string, appId: number, fileId: number, changeNotes: string): Promise<void> {
+export async function publishWorkshopItem(
+    username: string,
+    password: string,
+    otp: string,
+    modPath: string,
+    appId: number,
+    fileId: number,
+    changeNotes: string
+): Promise<void> {
     const tmpPath = await createTempDirectory();
     const vdfPath = join(tmpPath, 'workshop.vdf');
 
@@ -76,8 +84,12 @@ export async function publishWorkshopItem(username: string, password: string, mo
     core.debug(vdf);
 
     const args = [
-        '+login', username, password,
-        '+workshop_build_item', vdfPath,
+        '+login',
+        username,
+        password,
+        otp,
+        '+workshop_build_item',
+        vdfPath,
         '+quit'
     ];
 

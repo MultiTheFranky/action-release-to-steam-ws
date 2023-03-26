@@ -18,6 +18,7 @@ async function run(): Promise<void> {
 
         const username = core.getInput('username', { required: true });
         const password = core.getInput('password', { required: true });
+        const otp = core.getInput('otp', { required: false });
 
         const modPath = resolve(core.getInput('path', { required: true }));
         if (!isDirectory(modPath)) throw new Error(`Input path must be an existing directory: path (${modPath})`);
@@ -52,7 +53,7 @@ async function run(): Promise<void> {
         });
 
         await core.group('Setting up SteamCMD', () => setupSteamCMD());
-        await core.group('Publishing Mod', () => publishWorkshopItem(username, password, modPath, appId, fileId, changeNotes));
+        await core.group('Publishing Mod', () => publishWorkshopItem(username, password, otp, modPath, appId, fileId, changeNotes));
     } catch (err) {
         core.setFailed(err.message);
     }
