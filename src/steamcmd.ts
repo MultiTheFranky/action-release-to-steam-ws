@@ -5,7 +5,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { createTempDirectory } from './utils';
 import { steamcmdPath } from './main';
 
-const STEAM_STD_ERR_PATH = join(__dirname, 'logs', 'stderr.txt');
+const STEAM_STD_ERR_PATH = join(steamcmdPath, 'logs', 'stderr.txt');
 
 /**
  * Generate VDF file, which is used with SteamCMD to upload a mod.
