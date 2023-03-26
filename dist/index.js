@@ -62,8 +62,12 @@ function run() {
             exports.steamcmdPath = path_1.resolve(core.getInput('steamcmd_path', { required: false }));
             if ((exports.steamcmdPath.length > 0) && !utils_1.isDirectory(exports.steamcmdPath))
                 throw new Error(`Input path must be an existing directory: steamcmd_path (${exports.steamcmdPath})`);
-            if (exports.steamcmdPath.length === 0)
+            if (exports.steamcmdPath.length === 0) {
                 exports.steamcmdPath = path_1.join(__dirname, 'steamcmd.exe');
+            }
+            else {
+                exports.steamcmdPath = path_1.join(exports.steamcmdPath, 'steamcmd.sh');
+            }
             core.debug(`Absolute steamcmd path: ${exports.steamcmdPath}`);
             // meta.cpp
             {
