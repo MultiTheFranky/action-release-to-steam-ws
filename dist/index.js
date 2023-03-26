@@ -36,6 +36,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.steamcmdPath = void 0;
 const core = __importStar(__webpack_require__(186));
 const fs_1 = __webpack_require__(747);
 const path_1 = __webpack_require__(622);
@@ -58,6 +59,12 @@ function run() {
             if (!utils_1.isDirectory(modPath))
                 throw new Error(`Input path must be an existing directory: path (${modPath})`);
             core.debug(`Absolute mod path: ${modPath}`);
+            exports.steamcmdPath = path_1.resolve(core.getInput('steamcmd_path', { required: false }));
+            if ((exports.steamcmdPath.length > 0) && !utils_1.isDirectory(exports.steamcmdPath))
+                throw new Error(`Input path must be an existing directory: steamcmd_path (${exports.steamcmdPath})`);
+            if (exports.steamcmdPath.length === 0)
+                exports.steamcmdPath = path_1.join(__dirname, 'steamcmd.exe');
+            core.debug(`Absolute steamcmd path: ${exports.steamcmdPath}`);
             // meta.cpp
             {
                 const name = core.getInput('name', { required: true });
@@ -356,7 +363,7 @@ const core = __importStar(__webpack_require__(186));
 const path_1 = __webpack_require__(622);
 const fs_1 = __webpack_require__(747);
 const utils_1 = __webpack_require__(918);
-const STEAM_CMD_PATH = path_1.join(__dirname, 'steamcmd.exe');
+const main_1 = __webpack_require__(109);
 const STEAM_STD_ERR_PATH = path_1.join(__dirname, 'logs', 'stderr.txt');
 /**
  * Generate VDF file, which is used with SteamCMD to upload a mod.
@@ -384,7 +391,7 @@ function generateVDF(absPath, appId, fileId, changeNotes) {
 function execSteamCMD(args) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield exec.exec(STEAM_CMD_PATH, args);
+            yield exec.exec(main_1.steamcmdPath, args);
         }
         catch (err) {
             const stdErr = fs_1.readFileSync(STEAM_STD_ERR_PATH, 'utf8');

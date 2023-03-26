@@ -6,6 +6,8 @@ import { generateMetaCPP } from './metaCPP';
 import { publishWorkshopItem, setupSteamCMD } from './steamcmd';
 import { isDirectory } from './utils';
 
+export let steamcmdPath: string;
+
 async function run(): Promise<void> {
     try {
         const fileId = Number.parseInt(core.getInput('file_id', { required: true }), 10);
@@ -20,6 +22,11 @@ async function run(): Promise<void> {
         const modPath = resolve(core.getInput('path', { required: true }));
         if (!isDirectory(modPath)) throw new Error(`Input path must be an existing directory: path (${modPath})`);
         core.debug(`Absolute mod path: ${modPath}`);
+
+        steamcmdPath = resolve(core.getInput('steamcmd_path', { required: false }));
+        if ((steamcmdPath.length > 0) && !isDirectory(steamcmdPath)) throw new Error(`Input path must be an existing directory: steamcmd_path (${steamcmdPath})`);
+        if (steamcmdPath.length === 0) steamcmdPath = join(__dirname, 'steamcmd.exe');
+        core.debug(`Absolute steamcmd path: ${steamcmdPath}`);
 
         // meta.cpp
         {

@@ -3,8 +3,8 @@ import * as core from '@actions/core';
 import { join } from 'path';
 import { readFileSync, writeFileSync } from 'fs';
 import { createTempDirectory } from './utils';
+import { steamcmdPath } from './main';
 
-const STEAM_CMD_PATH = join(__dirname, 'steamcmd.exe');
 const STEAM_STD_ERR_PATH = join(__dirname, 'logs', 'stderr.txt');
 
 /**
@@ -33,7 +33,7 @@ function generateVDF(absPath: string, appId: number, fileId: number, changeNotes
  */
 async function execSteamCMD(args: string[]): Promise<void> {
     try {
-        await exec.exec(STEAM_CMD_PATH, args);
+        await exec.exec(steamcmdPath, args);
     } catch (err) {
         const stdErr = readFileSync(STEAM_STD_ERR_PATH, 'utf8');
         core.error(`The following is SteamCMD's standard error output:\n--- ${STEAM_STD_ERR_PATH} START ---\n${stdErr}\n--- ${STEAM_STD_ERR_PATH} START ---`);
