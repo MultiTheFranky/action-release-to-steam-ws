@@ -1,6 +1,6 @@
-name: 'Upload Arma 3 Mod to Steam WS'
+name: 'Upload Arma 3 Mod to Steam WS - MultiTheFranky'
 description: 'Upload an Arma 3 mod to the Steam Workshop. This also generates a meta.cpp and can accept change notes in Markdown format.'
-author: 'Gruppe Adler'
+author: 'Gruppe Adler - MultiTheFranky'
 branding:
   icon: 'upload-cloud'
   color: 'gray-dark'
@@ -21,6 +21,9 @@ inputs:
   path:
     description: 'Path to mod folder'
     required: true
+  steamcmd_path:
+    description: 'Path to steamcmd'
+    required: false
   name:
     description: 'Name of mod (used in meta.cpp)'
     required: true
