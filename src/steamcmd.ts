@@ -5,8 +5,6 @@ import { readFileSync, writeFileSync } from 'fs';
 import { createTempDirectory } from './utils';
 import { steamcmdPath } from './main';
 
-const STEAM_STD_ERR_PATH = join(steamcmdPath, 'logs', 'stderr.txt');
-
 /**
  * Generate VDF file, which is used with SteamCMD to upload a mod.
  * @param absPath Absolute path to mod
@@ -35,8 +33,11 @@ async function execSteamCMD(args: string[]): Promise<void> {
     try {
         await exec.exec(steamcmdPath, args);
     } catch (err) {
-        const stdErr = readFileSync(STEAM_STD_ERR_PATH, 'utf8');
-        core.error(`The following is SteamCMD's standard error output:\n--- ${STEAM_STD_ERR_PATH} START ---\n${stdErr}\n--- ${STEAM_STD_ERR_PATH} START ---`);
+        const errorPath = join(steamcmdPath, 'logs', 'stderr.txt');
+        const stdErr = readFileSync(errorPath, 'utf8');
+        core.error(
+            `The following is SteamCMD's standard error output:\n--- ${errorPath} START ---\n${stdErr}\n--- ${errorPath} START ---`
+        );
         throw err;
     }
 }

@@ -364,7 +364,6 @@ const path_1 = __webpack_require__(622);
 const fs_1 = __webpack_require__(747);
 const utils_1 = __webpack_require__(918);
 const main_1 = __webpack_require__(109);
-const STEAM_STD_ERR_PATH = path_1.join(main_1.steamcmdPath, 'logs', 'stderr.txt');
 /**
  * Generate VDF file, which is used with SteamCMD to upload a mod.
  * @param absPath Absolute path to mod
@@ -394,8 +393,9 @@ function execSteamCMD(args) {
             yield exec.exec(main_1.steamcmdPath, args);
         }
         catch (err) {
-            const stdErr = fs_1.readFileSync(STEAM_STD_ERR_PATH, 'utf8');
-            core.error(`The following is SteamCMD's standard error output:\n--- ${STEAM_STD_ERR_PATH} START ---\n${stdErr}\n--- ${STEAM_STD_ERR_PATH} START ---`);
+            const errorPath = path_1.join(main_1.steamcmdPath, 'logs', 'stderr.txt');
+            const stdErr = fs_1.readFileSync(errorPath, 'utf8');
+            core.error(`The following is SteamCMD's standard error output:\n--- ${errorPath} START ---\n${stdErr}\n--- ${errorPath} START ---`);
             throw err;
         }
     });
