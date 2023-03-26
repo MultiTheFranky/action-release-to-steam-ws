@@ -25,7 +25,11 @@ async function run(): Promise<void> {
 
         steamcmdPath = resolve(core.getInput('steamcmd_path', { required: false }));
         if ((steamcmdPath.length > 0) && !isDirectory(steamcmdPath)) throw new Error(`Input path must be an existing directory: steamcmd_path (${steamcmdPath})`);
-        if (steamcmdPath.length === 0) steamcmdPath = join(__dirname, 'steamcmd.exe');
+        if (steamcmdPath.length === 0) {
+            steamcmdPath = join(__dirname, 'steamcmd.exe');
+        } else {
+            steamcmdPath = join(steamcmdPath, 'steamcmd.sh');
+        }
         core.debug(`Absolute steamcmd path: ${steamcmdPath}`);
 
         // meta.cpp
