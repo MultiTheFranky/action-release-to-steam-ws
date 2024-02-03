@@ -67,7 +67,7 @@ function run() {
                 exports.steamcmdPath = path_1.join(__dirname, 'steamcmd.exe');
             }
             else {
-                exports.steamcmdPath = path_1.join(exports.steamcmdPath, 'steamcmd.sh');
+                exports.steamcmdPath = path_1.join(exports.steamcmdPath, 'steamcmd.exe');
             }
             core.debug(`Absolute steamcmd path: ${exports.steamcmdPath}`);
             // meta.cpp

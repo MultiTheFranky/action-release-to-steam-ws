@@ -29,7 +29,7 @@ async function run(): Promise<void> {
         if (steamcmdPath.length === 0) {
             steamcmdPath = join(__dirname, 'steamcmd.exe');
         } else {
-            steamcmdPath = join(steamcmdPath, 'steamcmd.sh');
+            steamcmdPath = join(steamcmdPath, 'steamcmd.exe');
         }
         core.debug(`Absolute steamcmd path: ${steamcmdPath}`);
 
