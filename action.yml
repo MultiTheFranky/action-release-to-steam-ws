@@ -41,7 +41,7 @@ inputs:
   change_notes_md:
     description: 'Whether the change notes are in markdown format'
     required: false
-    default: true
+    default: "true"
 runs:
-  using: 'node12'
+  using: 'node20'
   main: 'dist/index.js'
