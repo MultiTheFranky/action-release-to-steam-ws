@@ -20,6 +20,9 @@
     "node",
     "release"
   ],
+  "engines": {
+    "node": ">=20"
+  },
   "author": "Gruppe Adler",
   "dependencies": {
     "@actions/core": "^1.2.6",

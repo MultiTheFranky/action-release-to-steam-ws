@@ -55,7 +55,7 @@ async function run(): Promise<void> {
         await core.group('Setting up SteamCMD', () => setupSteamCMD());
         await core.group('Publishing Mod', () => publishWorkshopItem(username, password, otp, modPath, appId, fileId, changeNotes));
     } catch (err) {
-        core.setFailed(err.message);
+        if (err instanceof Error) core.setFailed(err.message);
     }
 }
 

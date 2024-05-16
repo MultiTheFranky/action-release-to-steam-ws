@@ -53,7 +53,7 @@ export async function setupSteamCMD(): Promise<void> {
     } catch (err) {
         // we ignore any errors on purpose, because some shitty SteamCMD version always
         // exits with code 7 and I can't figure out why... everything seems to work tho :D
-        core.error(err);
+        if (err instanceof Error) core.warning(err.message);
     }
 }
 
