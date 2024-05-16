@@ -47,7 +47,7 @@ async function run(): Promise<void> {
             core.debug(`meta.cpp written to ${metaPath}`);
         }
 
-        const changeNotes = generateChangeNotes();
+        const changeNotes = await generateChangeNotes();
         await core.group('Change Notes (Steam Markup)', async() => {
             core.info(changeNotes);
         });
@@ -59,7 +59,7 @@ async function run(): Promise<void> {
     }
 }
 
-function generateChangeNotes(): string {
+async function generateChangeNotes(): Promise<string> {
     const isMarkdown = core.getBooleanInput('change_notes_md');
 
     const changeNotesTitle = core.getInput('change_notes_title');
@@ -70,7 +70,7 @@ function generateChangeNotes(): string {
         core.debug('Change Notes (Markdown):');
         core.debug(mdChangeNotes);
 
-        return mdToSteam(mdChangeNotes);
+        return await mdToSteam(mdChangeNotes);
     } else {
         return changeNotesTitle === '' ? changeNotesBody : `[h1]${changeNotesTitle}[/h1]\n${changeNotesBody}`;
     }

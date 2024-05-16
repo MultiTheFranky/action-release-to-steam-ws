@@ -82,7 +82,7 @@ renderer.tablerow = (content: string): string => {
  * @param {string} raw Raw (not rendered) text
  * @param {slugger} slugger Slugger
  */
-renderer.heading = (text: string, level: number, raw: string, slugger: marked.Slugger): string => {
+renderer.heading = (text: string, level: number, raw: string): string => {
     // steam only allows h1, h2 and h3
     if (level > 4) return `${text}\n`;
     if (level === 4) return `[b]${text}[/b]\n`;
@@ -163,6 +163,6 @@ renderer.text = (text: string): string => {
  * @param md Markdown
  * @returns Text in steam markup
  */
-export function mdToSteam(md: string): string {
-    return marked(md, { renderer });
+export async function mdToSteam(md: string): Promise<string> {
+    return await marked.parse(md, { renderer });
 }
